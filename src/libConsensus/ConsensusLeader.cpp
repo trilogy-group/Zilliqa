@@ -85,10 +85,11 @@ bool ConsensusLeader::ProcessMessageCommitCore(
     uint16_t backupID = 0;
 
     CommitPoint commitPoint;
+    uint64_t blockNumber;
 
     if (!Messenger::GetConsensusCommit(commit, offset, m_consensusID,
                                        m_blockHash, backupID, commitPoint,
-                                       m_committee))
+                                       blockNumber, m_committee))
     {
         LOG_GENERAL(WARNING, "Messenger::GetConsensusCommit failed.");
         return false;
@@ -104,6 +105,17 @@ bool ConsensusLeader::ProcessMessageCommitCore(
     if (!commitPoint.Initialized())
     {
         LOG_GENERAL(WARNING, "Invalid commit received");
+        return false;
+    }
+
+    // Check block number
+    if (blockNumber != m_blockNumber)
+    {
+        LOG_GENERAL(WARNING,
+                    "Block number "
+                        << blockNumber
+                        << " in message not match with my block number "
+                        << m_blockNumber);
         return false;
     }
 
@@ -547,11 +559,11 @@ ConsensusLeader::ConsensusLeader(
     uint32_t consensus_id, const vector<unsigned char>& block_hash,
     uint16_t node_id, const PrivKey& privkey,
     const deque<pair<PubKey, Peer>>& committee, unsigned char class_byte,
-    unsigned char ins_byte,
+    unsigned char ins_byte, uint64_t block_number,
     NodeCommitFailureHandlerFunc nodeCommitFailureHandlerFunc,
     ShardCommitFailureHandlerFunc shardCommitFailureHandlerFunc)
     : ConsensusCommon(consensus_id, block_hash, node_id, privkey, committee,
-                      class_byte, ins_byte)
+                      class_byte, ins_byte, block_number)
     , m_commitMap(committee.size(), false)
     , m_commitPointMap(committee.size(), CommitPoint())
     , m_commitRedundantMap(committee.size(), false)

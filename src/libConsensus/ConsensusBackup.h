@@ -118,6 +118,7 @@ public:
             class_byte, // class byte representing Executable class using this instance of ConsensusBackup
         unsigned char
             ins_byte, // instruction byte representing consensus messages for the Executable class
+        uint64_t block_number,
         MsgContentValidatorFunc
             msg_validator // function handler for validating the content of message for consensus (e.g., Tx block)
     );

@@ -64,7 +64,7 @@ ConsensusCommon::ConsensusCommon(uint32_t consensus_id,
                                  uint16_t my_id, const PrivKey& privkey,
                                  const deque<pair<PubKey, Peer>>& committee,
                                  unsigned char class_byte,
-                                 unsigned char ins_byte)
+                                 unsigned char ins_byte, uint64_t block_number)
     : m_consensusErrorCode(NO_ERROR)
     , m_consensusID(consensus_id)
     , m_blockHash(block_hash)
@@ -73,6 +73,7 @@ ConsensusCommon::ConsensusCommon(uint32_t consensus_id,
     , m_committee(committee)
     , m_classByte(class_byte)
     , m_insByte(ins_byte)
+    , m_blockNumber(block_number)
     , m_responseMap(committee.size(), false)
 {
 }

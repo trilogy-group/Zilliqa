@@ -356,11 +356,12 @@ public:
                                    const std::vector<unsigned char>& blockHash,
                                    const uint16_t backupID,
                                    const CommitPoint& commit,
+                                   const uint64_t blockNumber,
                                    const std::pair<PrivKey, PubKey>& backupKey);
     static bool GetConsensusCommit(
         const std::vector<unsigned char>& src, const unsigned int offset,
         const uint32_t consensusID, const std::vector<unsigned char>& blockHash,
-        uint16_t& backupID, CommitPoint& commit,
+        uint16_t& backupID, CommitPoint& commit, uint64_t& blockNumber,
         const std::deque<std::pair<PubKey, Peer>>& committeeKeys);
 
     static bool SetConsensusChallenge(

@@ -186,6 +186,7 @@ bool ConsensusBackup::GenerateCommitMessage(vector<unsigned char>& commit,
 
     if (!Messenger::SetConsensusCommit(
             commit, offset, m_consensusID, m_blockHash, m_myID, *m_commitPoint,
+            m_blockNumber,
             make_pair(m_myPrivKey, m_committee.at(m_myID).first)))
     {
         LOG_GENERAL(WARNING, "Messenger::SetConsensusCommit failed.");
@@ -432,13 +433,16 @@ bool ConsensusBackup::ProcessMessageFinalCollectiveSig(
                                            PROCESS_FINALCOLLECTIVESIG, DONE);
 }
 
-ConsensusBackup::ConsensusBackup(
-    uint32_t consensus_id, const vector<unsigned char>& block_hash,
-    uint16_t node_id, uint16_t leader_id, const PrivKey& privkey,
-    const deque<pair<PubKey, Peer>>& committee, unsigned char class_byte,
-    unsigned char ins_byte, MsgContentValidatorFunc msg_validator)
+ConsensusBackup::ConsensusBackup(uint32_t consensus_id,
+                                 const vector<unsigned char>& block_hash,
+                                 uint16_t node_id, uint16_t leader_id,
+                                 const PrivKey& privkey,
+                                 const deque<pair<PubKey, Peer>>& committee,
+                                 unsigned char class_byte,
+                                 unsigned char ins_byte, uint64_t block_number,
+                                 MsgContentValidatorFunc msg_validator)
     : ConsensusCommon(consensus_id, block_hash, node_id, privkey, committee,
-                      class_byte, ins_byte)
+                      class_byte, ins_byte, block_number)
     , m_leaderID(leader_id)
     , m_msgContentValidator(msg_validator)
 {

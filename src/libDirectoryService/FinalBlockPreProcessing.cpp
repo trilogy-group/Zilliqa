@@ -294,7 +294,8 @@ bool DirectoryService::RunConsensusOnFinalBlockWhenDSPrimary()
         m_mediator.m_selfKey.first, *m_mediator.m_DSCommittee,
         static_cast<unsigned char>(DIRECTORY),
         static_cast<unsigned char>(FINALBLOCKCONSENSUS),
-        nodeMissingMicroBlocksFunc, ShardCommitFailureHandlerFunc()));
+        m_mediator.m_currentEpochNum, nodeMissingMicroBlocksFunc,
+        ShardCommitFailureHandlerFunc()));
 
     if (m_consensusObject == nullptr)
     {
@@ -1163,7 +1164,8 @@ bool DirectoryService::RunConsensusOnFinalBlockWhenDSBackup()
         m_consensusID, m_consensusBlockHash, m_consensusMyID,
         m_consensusLeaderID, m_mediator.m_selfKey.first,
         *m_mediator.m_DSCommittee, static_cast<unsigned char>(DIRECTORY),
-        static_cast<unsigned char>(FINALBLOCKCONSENSUS), func));
+        static_cast<unsigned char>(FINALBLOCKCONSENSUS),
+        m_mediator.m_currentEpochNum, func));
 
     if (m_consensusObject == nullptr)
     {

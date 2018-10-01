@@ -379,7 +379,8 @@ message ConsensusCommit
         required uint32 consensusid      = 1;
         required bytes blockhash         = 2; // 32 bytes
         required uint32 backupid         = 3; // only lower 2 bytes used
-        required ByteArray commit        = 4;
+        required uint64 blocknumber      = 4;
+        required ByteArray commit        = 5;
     }
     required ConsensusInfo consensusinfo = 1;
     required ByteArray signature         = 2;

@@ -105,7 +105,8 @@ bool ConsensusUser::ProcessSetLeader(const vector<unsigned char>& message,
             dummy_consensus_id, dummy_block_hash, my_id, leader_id,
             m_selfKey.first, peerList,
             static_cast<unsigned char>(MessageType::CONSENSUSUSER),
-            static_cast<unsigned char>(InstructionType::CONSENSUS), func));
+            static_cast<unsigned char>(InstructionType::CONSENSUS),
+            m_mediator.m_currentEpochNum, func));
     }
 
     if (m_consensus == nullptr)

@@ -129,6 +129,7 @@ public:
             class_byte, // class byte representing Executable class using this instance of ConsensusLeader
         unsigned char
             ins_byte, // instruction byte representing consensus messages for the Executable class
+        uint64_t block_number,
         NodeCommitFailureHandlerFunc nodeCommitFailureHandlerFunc,
         ShardCommitFailureHandlerFunc shardCommitFailureHandlerFunc);
 

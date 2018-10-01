@@ -335,7 +335,8 @@ bool DirectoryService::RunConsensusOnViewChangeWhenCandidateLeader()
         m_mediator.m_selfKey.first, *m_mediator.m_DSCommittee,
         static_cast<unsigned char>(DIRECTORY),
         static_cast<unsigned char>(VIEWCHANGECONSENSUS),
-        NodeCommitFailureHandlerFunc(), ShardCommitFailureHandlerFunc()));
+        m_mediator.m_currentEpochNum, NodeCommitFailureHandlerFunc(),
+        ShardCommitFailureHandlerFunc()));
 
     if (m_consensusObject == nullptr)
     {
@@ -411,7 +412,8 @@ bool DirectoryService::RunConsensusOnViewChangeWhenNotCandidateLeader()
         consensusID, m_consensusBlockHash, m_consensusMyID, m_viewChangeCounter,
         m_mediator.m_selfKey.first, *m_mediator.m_DSCommittee,
         static_cast<unsigned char>(DIRECTORY),
-        static_cast<unsigned char>(VIEWCHANGECONSENSUS), func));
+        static_cast<unsigned char>(VIEWCHANGECONSENSUS),
+        m_mediator.m_currentEpochNum, func));
 
     if (m_consensusObject == nullptr)
     {

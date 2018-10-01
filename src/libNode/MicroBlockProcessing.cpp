@@ -1043,12 +1043,12 @@ bool Node::RunConsensusOnMicroBlockWhenShardLeader()
         = [this](const map<unsigned int, vector<unsigned char>>& m) mutable
         -> bool { return OnCommitFailure(m); };
 
-    m_consensusObject.reset(
-        new ConsensusLeader(m_consensusID, m_consensusBlockHash,
-                            m_consensusMyID, m_mediator.m_selfKey.first,
-                            *m_myShardMembers, static_cast<unsigned char>(NODE),
-                            static_cast<unsigned char>(MICROBLOCKCONSENSUS),
-                            nodeMissingTxnsFunc, commitFailureFunc));
+    m_consensusObject.reset(new ConsensusLeader(
+        m_consensusID, m_consensusBlockHash, m_consensusMyID,
+        m_mediator.m_selfKey.first, *m_myShardMembers,
+        static_cast<unsigned char>(NODE), m_mediator.m_currentEpochNum,
+        static_cast<unsigned char>(MICROBLOCKCONSENSUS), nodeMissingTxnsFunc,
+        commitFailureFunc));
 
     if (m_consensusObject == nullptr)
     {
@@ -1134,7 +1134,8 @@ bool Node::RunConsensusOnMicroBlockWhenShardBackup()
         m_consensusID, m_consensusBlockHash, m_consensusMyID,
         m_consensusLeaderID, m_mediator.m_selfKey.first, peerList,
         static_cast<unsigned char>(NODE),
-        static_cast<unsigned char>(MICROBLOCKCONSENSUS), func));
+        static_cast<unsigned char>(MICROBLOCKCONSENSUS),
+        m_mediator.m_currentEpochNum, func));
 
     if (m_consensusObject == nullptr)
     {

@@ -128,6 +128,9 @@ protected:
     /// The instruction byte value for the next consensus message to be composed.
     unsigned char m_insByte;
 
+    /// The current block number
+    uint64_t m_blockNumber;
+
     /// Generated collective signature
     Signature m_collectiveSig;
 
@@ -157,7 +160,8 @@ protected:
                     const std::vector<unsigned char>& block_hash,
                     uint16_t my_id, const PrivKey& privkey,
                     const std::deque<std::pair<PubKey, Peer>>& committee,
-                    unsigned char class_byte, unsigned char ins_byte);
+                    unsigned char class_byte, unsigned char ins_byte,
+                    uint64_t block_number);
 
     /// Destructor.
     ~ConsensusCommon();

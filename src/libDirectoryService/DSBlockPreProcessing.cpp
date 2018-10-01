@@ -536,7 +536,8 @@ bool DirectoryService::RunConsensusOnDSBlockWhenDSPrimary()
         m_mediator.m_selfKey.first, *m_mediator.m_DSCommittee,
         static_cast<unsigned char>(DIRECTORY),
         static_cast<unsigned char>(DSBLOCKCONSENSUS),
-        NodeCommitFailureHandlerFunc(), ShardCommitFailureHandlerFunc()));
+        m_mediator.m_currentEpochNum, NodeCommitFailureHandlerFunc(),
+        ShardCommitFailureHandlerFunc()));
 
     if (m_consensusObject == nullptr)
     {
@@ -789,7 +790,8 @@ bool DirectoryService::RunConsensusOnDSBlockWhenDSBackup()
         consensusID, m_consensusBlockHash, m_consensusMyID, m_consensusLeaderID,
         m_mediator.m_selfKey.first, *m_mediator.m_DSCommittee,
         static_cast<unsigned char>(DIRECTORY),
-        static_cast<unsigned char>(DSBLOCKCONSENSUS), func));
+        static_cast<unsigned char>(DSBLOCKCONSENSUS),
+        m_mediator.m_currentEpochNum, func));
 
     if (m_consensusObject == nullptr)
     {

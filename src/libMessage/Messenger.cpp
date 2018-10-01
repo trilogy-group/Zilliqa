@@ -2637,13 +2637,11 @@ bool Messenger::GetLookupSetShardsFromSeed(const vector<unsigned char>& src,
 // Consensus messages
 // ============================================================================
 
-bool Messenger::SetConsensusCommit(vector<unsigned char>& dst,
-                                   const unsigned int offset,
-                                   const uint32_t consensusID,
-                                   const vector<unsigned char>& blockHash,
-                                   const uint16_t backupID,
-                                   const CommitPoint& commit,
-                                   const pair<PrivKey, PubKey>& backupKey)
+bool Messenger::SetConsensusCommit(
+    vector<unsigned char>& dst, const unsigned int offset,
+    const uint32_t consensusID, const vector<unsigned char>& blockHash,
+    const uint16_t backupID, const CommitPoint& commit,
+    const uint64_t blockNumber, const pair<PrivKey, PubKey>& backupKey)
 {
     LOG_MARKER();
 
@@ -2653,6 +2651,7 @@ bool Messenger::SetConsensusCommit(vector<unsigned char>& dst,
     result.mutable_consensusinfo()->set_blockhash(blockHash.data(),
                                                   blockHash.size());
     result.mutable_consensusinfo()->set_backupid(backupID);
+    result.mutable_consensusinfo()->set_blocknumber(blockNumber);
     SerializableToProtobufByteArray(
         commit, *result.mutable_consensusinfo()->mutable_commit());
 
@@ -2688,7 +2687,7 @@ bool Messenger::SetConsensusCommit(vector<unsigned char>& dst,
 bool Messenger::GetConsensusCommit(
     const vector<unsigned char>& src, const unsigned int offset,
     const uint32_t consensusID, const vector<unsigned char>& blockHash,
-    uint16_t& backupID, CommitPoint& commit,
+    uint16_t& backupID, CommitPoint& commit, uint64_t& blockNumber,
     const deque<pair<PubKey, Peer>>& committeeKeys)
 {
     LOG_MARKER();
@@ -2729,6 +2728,8 @@ bool Messenger::GetConsensusCommit(
                         << backupID << " Shard size: " << committeeKeys.size());
         return false;
     }
+
+    blockNumber = result.consensusinfo().blocknumber();
 
     ProtobufByteArrayToSerializable(result.consensusinfo().commit(), commit);
 
