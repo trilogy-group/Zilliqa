@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+  builder:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    container_name: zilliqa-builder
+    ports:
+      - 5001-5020:5001-5020
+    volumes:
+      - ..:/data:Z

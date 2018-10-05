@@ -1,0 +1,12 @@
+Build the Docker image: 
+  docker build
+
+Start the development container: 
+  docker up
+
+Conect to the development container: 
+  docker exec
+
+Shutdown the development container: 
+  devspaces down
+
