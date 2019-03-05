@@ -5,8 +5,8 @@ services:
     build:
       context: .
       dockerfile: ./Dockerfile
-    container_name: zilliqa-builder
+    container_name: zilliqa
     ports:
       - 5001-5020:5001-5020
     volumes:
-      - ..:/data:Z
+      - ../..:/data:Z
